@@ -55,7 +55,7 @@ def pregunta_02():
     print(df['life'].mean().round(4))
 
     # Imprimir el tipo de dato de la columna 'fertility'.
-    print(df['fertility'].dtype)
+    print(type(df['fertility']))
 
     # Imprimir la correlación entre las columnas 'GDP' y 'life' con 4 decimales.
     print(df['GDP'].corr(df['life']).round(4))
@@ -128,4 +128,4 @@ def pregunta_04():
     # Calcular e imprimir R^2 y RMSE
     print("R^2: {:6.4f}".format(linearRegression.score(X_test.reshape(-1, 1), y_test)))
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-    print("Error cuadrático medio raíz: {:6.4f}".format(rmse))
+    print("Root Mean Squared Error: {:6.4f}".format(rmse))
