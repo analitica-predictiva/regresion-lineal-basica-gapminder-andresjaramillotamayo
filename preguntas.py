@@ -8,140 +8,124 @@ En este laboratio se construirá un modelo de regresión lineal univariado.
 import numpy as np
 import pandas as pd
 
-
 def pregunta_01():
     """
-    En este punto se realiza la lectura de conjuntos de datos.
-    Complete el código presentado a continuación.
+    Esta función realiza la lectura del conjunto de datos y realiza algunas operaciones básicas.
     """
-    # Lea el archivo `gm_2008_region.csv` y asignelo al DataFrame `df`
-    df = ____
+    # Leer el archivo 'gm_2008_region.csv' y asignarlo al DataFrame 'df'
+    df = pd.read_csv("gm_2008_region.csv")
 
-    # Asigne la columna "life" a `y` y la columna "fertility" a `X`
-    y = ____[____].____
-    X = ____[____].____
+    # Asignar la columna "life" a 'y' y la columna "fertility" a 'X'
+    y = df["life"].values
+    X = df["fertility"].values
+    
+    # Imprimir las dimensiones de 'y'
+    print(y.shape)
 
-    # Imprima las dimensiones de `y`
-    print(____.____)
+    # Imprimir las dimensiones de 'X'
+    print(X.shape)
 
-    # Imprima las dimensiones de `X`
-    print(____.____)
+    # Transformar 'y' a un array de numpy usando reshape
+    y_reshaped = y.reshape(-1, 1)
 
-    # Transforme `y` a un array de numpy usando reshape
-    y_reshaped = y.reshape(____, ____)
+    # Transformar 'X' a un array de numpy usando reshape
+    X_reshaped = X.reshape(-1, 1)
 
-    # Trasforme `X` a un array de numpy usando reshape
-    X_reshaped = X.reshape(____, ____)
+    # Imprimir las nuevas dimensiones de 'y'
+    print(y_reshaped.shape)
 
-    # Imprima las nuevas dimensiones de `y`
-    print(____.____)
-
-    # Imprima las nuevas dimensiones de `X`
-    print(____.____)
+    # Imprimir las nuevas dimensiones de 'X'
+    print(X_reshaped.shape)
 
 
 def pregunta_02():
     """
-    En este punto se realiza la impresión de algunas estadísticas básicas
-    Complete el código presentado a continuación.
+    Esta función imprime algunas estadísticas básicas del conjunto de datos.
     """
+    # Leer el archivo 'gm_2008_region.csv' y asignarlo al DataFrame 'df'
+    df = pd.read_csv("gm_2008_region.csv")
 
-    # Lea el archivo `gm_2008_region.csv` y asignelo al DataFrame `df`
-    df = ____
+    # Imprimir las dimensiones del DataFrame
+    print(df.shape)
 
-    # Imprima las dimensiones del DataFrame
-    print(____.____)
+    # Imprimir la correlación entre las columnas 'life' y 'fertility' con 4 decimales.
+    print(df['life'].corr(df['fertility']).round(4))
 
-    # Imprima la correlación entre las columnas `life` y `fertility` con 4 decimales.
-    print(____)
+    # Imprimir la media de la columna 'life' con 4 decimales.
+    print(df['life'].mean().round(4))
 
-    # Imprima la media de la columna `life` con 4 decimales.
-    print(____)
+    # Imprimir el tipo de dato de la columna 'fertility'.
+    print(df['fertility'].dtype)
 
-    # Imprima el tipo de dato de la columna `fertility`.
-    print(____)
-
-    # Imprima la correlación entre las columnas `GDP` y `life` con 4 decimales.
-    print(____)
+    # Imprimir la correlación entre las columnas 'GDP' y 'life' con 4 decimales.
+    print(df['GDP'].corr(df['life']).round(4))
 
 
 def pregunta_03():
     """
-    Entrenamiento del modelo sobre todo el conjunto de datos.
-    Complete el código presentado a continuación.
+    Esta función entrena un modelo de regresión lineal sobre todo el conjunto de datos.
     """
+    # Leer el archivo 'gm_2008_region.csv' y asignarlo al DataFrame 'df'
+    df = pd.read_csv("gm_2008_region.csv")
 
-    # Lea el archivo `gm_2008_region.csv` y asignelo al DataFrame `df`
-    df = ____
+    # Asignar a la variable los valores de la columna 'fertility'
+    X_fertility = df['fertility'].values
 
-    # Asigne a la variable los valores de la columna `fertility`
-    X_fertility = ____
+    # Asignar a la variable los valores de la columna 'life'
+    y_life = df['life'].values
 
-    # Asigne a la variable los valores de la columna `life`
-    y_life = ____
+    # Importar la regresión lineal
+    from sklearn.linear_model import LinearRegression
 
-    # Importe LinearRegression
-    from ____ import ____
+    # Crear una instancia del modelo de regresión lineal
+    reg = LinearRegression()
 
-    # Cree una instancia del modelo de regresión lineal
-    reg = ____
+    # Crear el espacio de predicción usando linspace para crear un vector con valores entre el máximo y el mínimo de X_fertility
+    prediction_space = np.linspace(min(X_fertility), max(X_fertility)).reshape(-1, 1)
 
-    # Cree El espacio de predicción. Esto es, use linspace para crear
-    # un vector con valores entre el máximo y el mínimo de X_fertility
-    prediction_space = ____(
-        ____,
-        ____,
-    ).reshape(____, _____)
+    # Entrenar el modelo usando X_fertility e y_life
+    reg.fit(X_fertility.reshape(-1, 1), y_life)
 
-    # Entrene el modelo usando X_fertility y y_life
-    reg.fit(____, ____)
-
-    # Compute las predicciones para el espacio de predicción
+    # Calcular las predicciones para el espacio de predicción
     y_pred = reg.predict(prediction_space)
 
-    # Imprima el R^2 del modelo con 4 decimales
-    print(____.score(____, ____).round(____))
+    # Imprimir el R^2 del modelo con 4 decimales
+    print(reg.score(X_fertility.reshape(-1, 1), y_life).round(4))
 
 
 def pregunta_04():
     """
-    Particionamiento del conjunto de datos usando train_test_split.
-    Complete el código presentado a continuación.
+    Esta función realiza el particionamiento del conjunto de datos utilizando train_test_split.
     """
+    # Importar la regresión lineal
+    # Importar train_test_split
+    # Importar mean_squared_error
+    from sklearn.linear_model import LinearRegression
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import mean_squared_error
 
-    # Importe LinearRegression
-    # Importe train_test_split
-    # Importe mean_squared_error
-    from ____ import ____
+    # Leer el archivo 'gm_2008_region.csv' y asignarlo al DataFrame 'df'
+    df = pd.read_csv("gm_2008_region.csv")
 
-    # Lea el archivo `gm_2008_region.csv` y asignelo al DataFrame `df`
-    df = ____
+    # Asignar a la variable los valores de la columna 'fertility'
+    X_fertility = df['fertility'].values
 
-    # Asigne a la variable los valores de la columna `fertility`
-    X_fertility = ____
+    # Asignar a la variable los valores de la columna 'life'
+    y_life = df['life'].values
 
-    # Asigne a la variable los valores de la columna `life`
-    y_life = ____
+    # Dividir los datos en conjuntos de entrenamiento y prueba. La semilla del generador de números aleatorios es 53. El tamaño del conjunto de entrenamiento es del 80%
+    (X_train, X_test, y_train, y_test) = train_test_split(X_fertility, y_life, test_size=0.2, random_state=53)
 
-    # Divida los datos de entrenamiento y prueba. La semilla del generador de números
-    # aleatorios es 53. El tamaño de la muestra de entrenamiento es del 80%
-    (X_train, X_test, y_train, y_test,) = ____(
-        ____,
-        ____,
-        test_size=____,
-        random_state=____,
-    )
+    # Crear una instancia del modelo de regresión lineal
+    linearRegression = LinearRegression()
 
-    # Cree una instancia del modelo de regresión lineal
-    linearRegression = ____
+    # Entrenar el clasificador usando X_train e y_train
+    linearRegression.fit(X_train.reshape(-1, 1), y_train)
 
-    # Entrene el clasificador usando X_train y y_train
-    ____.fit(____, ____)
+    # Predecir y_test usando X_test
+    y_pred = linearRegression.predict(X_test.reshape(-1, 1))
 
-    # Pronostique y_test usando X_test
-    y_pred = ____
-
-    # Compute and print R^2 and RMSE
-    print("R^2: {:6.4f}".format(linearRegression.score(X_test, y_test)))
-    rmse = np.sqrt(____(____, ____))
-    print("Root Mean Squared Error: {:6.4f}".format(rmse))
+    # Calcular e imprimir R^2 y RMSE
+    print("R^2: {:6.4f}".format(linearRegression.score(X_test.reshape(-1, 1), y_test)))
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    print("Error cuadrático medio raíz: {:6.4f}".format(rmse))
